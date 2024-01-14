@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="start_scan"> Scan  QR  Code </string>
+    <string name="scan">Scan</string>
+    <string name="scanned_qr_code">Scanned QR Code: %1$s</string>
+    <string name="scanned_data1">Scanned Data</string>
+    <string name="regtration_number">Regtration Number :</string>
+    <string name="date_of_birth">Date Of Birth :</string>
+</resources>
