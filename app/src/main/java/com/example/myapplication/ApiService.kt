@@ -24,5 +24,24 @@ interface ApiService {
      */
     @GET("getResults")
     fun getResults(): Call<List<Getdata>>
+    @GET("getResults")
+    fun getResults2() : Call<List<Getdata>>
+    @GET("getResults")
+    fun getResults3() : Call<List<Getdata>>
+
+    @GET("getResults")
+    fun getResults4() : Call<List<Getdata>>
+
+    @GET("getResults")
+    fun getResults5() : Call<List<Getdata>>
+
+    @GET("getResults")
+    fun getResults6() : Call<List<Getdata>>
+
+    @GET("getResults")
+    fun getResults7() : Call<List<Getdata>>
+
+    @GET("getResults")
+    fun getResults8() : Call<List<Getdata>>
 }
 
