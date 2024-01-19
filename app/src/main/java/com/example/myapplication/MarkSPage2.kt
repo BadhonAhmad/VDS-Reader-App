@@ -1,72 +1,103 @@
 package com.example.myapplication
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.material3.Surface
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.theme.MyApplicationTheme
-import com.example.myapplication.theme.TableCell
+import com.example.myapplication.theme.background
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class MarkSPage2 : ComponentActivity() {
+    private val BASE_URL = "http://10.200.194.29:5001/"
+    private var markSPage2Launched = false
+    private val apiService: ApiService by lazy {
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ApiService::class.java)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            MyApplicationTheme {
+        // Make the API call
+        val call: Call<List<Getdata>> = apiService.getResults()
 
-                    // Assuming you need to pass some data to MarkSPage2, modify the below line accordingly
-                    MarkSPage2Content()
+        call.enqueue(object : Callback<List<Getdata>> {
+            override fun onResponse(call: Call<List<Getdata>>, response: Response<List<Getdata>>) {
+                runOnUiThread {
+                    if (response.isSuccessful) {
+                        // Handle successful response
+                        val resultList: List<Getdata>? = response.body()
+                        if (resultList != null) {
+                            setContent {
+                                MyApplicationTheme {
+                                    Surface {
+                                        val navController = rememberNavController()
+                                        NavHost(
+                                            navController = navController,
+                                            startDestination = "Start"
+                                        ) {
+                                            composable("Start") {
+                                                background(resultList, navController)
+                                            }
 
+                                            composable("nextpage") {
+                                                // Check if MarkSPage2 has already been launched
+                                                if (!markSPage2Launched) {
+                                                    // Launch MarkSPage2
+                                                    val intent = Intent(this@MarkSPage2, MarkSPage3::class.java)
+                                                    startActivity(intent)
+
+                                                    // Set the flag to true to indicate that MarkSPage2 has been launched
+                                                    markSPage2Launched = true
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        handleApiError(response.code())
+                    }
+                }
             }
-        }
+
+            override fun onFailure(call: Call<List<Getdata>>, t: Throwable) {
+                runOnUiThread {
+                    // Handle failure
+                    handleApiError(t.message ?: "Unknown error")
+                }
+            }
+        })
     }
-}
 
-@Composable
-fun MarkSPage2Content() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .fillMaxWidth(),
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        // Header Image (Adjust based on your actual resources)
-        Image(
-            painter = painterResource(id = R.drawable.sustlogo),
-            contentDescription = null,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(100.dp)
-                .clip(MaterialTheme.shapes.medium)
-        )
+    private fun handleApiError(error: Any?) {
+        val errorMessage = "API call failed. Error: $error"
+        Log.e("API Call", errorMessage)
 
-        Spacer(modifier = Modifier.padding(top = 15.dp))
-        // Page 2 Content
-        Text(
-            text = "This is MarkSPage2",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        )
+        // Show a Toast with the error message
+        showToast(errorMessage)
+    }
 
+    private fun showToast(message: String) {
+        showToast(this@MarkSPage2, message)
+    }
+
+    private fun showToast(context: Context, message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 }
