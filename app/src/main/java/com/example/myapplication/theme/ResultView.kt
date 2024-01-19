@@ -6,6 +6,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -19,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.myapplication.Getdata
 import com.example.myapplication.R
 
@@ -28,7 +30,7 @@ import com.example.myapplication.R
  * @param results List of examination results to be displayed.
  */
 @Composable
-fun background(results: List<Getdata>) {
+fun background(results: List<Getdata>, navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -73,8 +75,24 @@ fun background(results: List<Getdata>) {
         )
         // Result Table
         ResultTable(results)
+
+        ElevatedButton(
+            onClick = {
+                // Navigate to the next page if the destination exists
+                navController.navigate("nextpage") {
+                    popUpTo("Start") { inclusive = true }
+                }
+            },
+            modifier = Modifier
+                .padding(top = 16.dp)
+                .fillMaxWidth()
+                .height(48.dp)  // Adjusted button height
+        ) {
+            Text("NEXT")
+        }
     }
 }
+
 
 /**
  * Composable function to display an individual examination result item.

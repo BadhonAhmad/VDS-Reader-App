@@ -1,14 +1,18 @@
 package com.example.myapplication
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.Surface
-import com.example.myapplication.theme.*
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.theme.MyApplicationTheme
+import com.example.myapplication.theme.background
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -16,7 +20,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class MarkSPage1 : ComponentActivity() {
-    private val BASE_URL = "http://192.168.0.102:5001/"
+    private val BASE_URL = "http://10.200.194.29:5001/"
+    private var markSPage2Launched = false
     private val apiService: ApiService by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -36,11 +41,32 @@ class MarkSPage1 : ComponentActivity() {
                     if (response.isSuccessful) {
                         // Handle successful response
                         val resultList: List<Getdata>? = response.body()
-                        setContent {
-                            MyApplicationTheme() {
-                                Surface()
-                                {
-                                    background(resultList ?: emptyList())
+                        if (resultList != null) {
+                            setContent {
+                                MyApplicationTheme {
+                                    Surface {
+                                        val navController = rememberNavController()
+                                        NavHost(
+                                            navController = navController,
+                                            startDestination = "Start"
+                                        ) {
+                                            composable("Start") {
+                                                background(resultList, navController)
+                                            }
+
+                                            composable("nextpage") {
+                                                // Check if MarkSPage2 has already been launched
+                                                if (!markSPage2Launched) {
+                                                    // Launch MarkSPage2
+                                                    val intent = Intent(this@MarkSPage1, MarkSPage2::class.java)
+                                                    startActivity(intent)
+
+                                                    // Set the flag to true to indicate that MarkSPage2 has been launched
+                                                    markSPage2Launched = true
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -75,9 +101,3 @@ class MarkSPage1 : ComponentActivity() {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 }
-
-
-
-
-
-

@@ -46,6 +46,10 @@
             android:name=".MarkSPage1"
             android:exported="false"
             android:screenOrientation="fullSensor" />
+        <activity
+            android:name=".MarkSPage2"
+            android:exported="false"
+            android:screenOrientation="fullSensor" />
     </application>
 
 </manifest>
