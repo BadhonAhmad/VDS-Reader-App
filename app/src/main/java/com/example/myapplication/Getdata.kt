@@ -1,4 +1,7 @@
 package com.example.myapplication
+
+import java.util.Date
+
 /**
 * Data class representing the output of a query for student examination results.
 *
@@ -19,4 +22,11 @@ data class  Getdata (
     val course_title: String,
     val semester : String,
     val course_credit: Float
+)
+data class StudentInfo(
+    val name : String,
+    val reg_no: Int,
+    val date_of_birth :String,
+    val dept : String,
+    val session: String
 )

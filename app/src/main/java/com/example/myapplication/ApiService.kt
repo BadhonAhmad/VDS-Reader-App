@@ -22,6 +22,8 @@ interface ApiService {
      *
      * @return Call object for the asynchronous response containing a list of Getdata.
      */
+    @GET ("StudentInfo")
+    fun getStudentInfo() : Call<List<StudentInfo>>
     @GET("getResults")
     fun getResults(): Call<List<Getdata>>
     @GET("getResults")
@@ -44,4 +46,6 @@ interface ApiService {
     @GET("getResults")
     fun getResults8() : Call<List<Getdata>>
 }
+
+
 

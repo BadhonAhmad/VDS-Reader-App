@@ -17,9 +17,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.myapplication.CheckResult
 import com.example.myapplication.Getdata
 import com.example.myapplication.R
 
@@ -34,14 +37,14 @@ fun background(results: List<Getdata>, navController: NavController) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
+
     ) {
         item {
             // Header Image
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .wrapContentHeight()
-                    .padding(6.dp),
+                    .wrapContentHeight(),
                 contentAlignment = Alignment.TopCenter
             ) {
                 Image(
@@ -55,29 +58,45 @@ fun background(results: List<Getdata>, navController: NavController) {
             }
         }
 
-        item {
+        item{
             // University Title
             Text(
                 text = "SHAHJALAL UNIVERSITY OF SCIENCE & TECHNOLOGY, SYLHET, BANGLADESH",
-                color = Color(0xFFFF013220),
                 fontSize = 11.5.sp,
                 textAlign = TextAlign.Center
             )
         }
 
-        item {
+        item{
             // Student Information
-            GetPersonInfo("PUT NAME", "Registration Name", "Session")
+
+               // contentAlignment= Alignment.Center
+
+
+            GetPersonInfo(
+                name = CheckResult.DataManager.studentInfo?.name ?: "",
+                regName = CheckResult.DataManager.studentInfo?.reg_no.toString()?: "", // Corrected typo
+                session = CheckResult.DataManager.studentInfo?.session ?: "",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp)
+            )
+
+
         }
 
         item {
             Spacer(modifier = Modifier.padding(top = 15.dp))
-            // Examination Title
-            Text(
-                text = "1st Semester Examination",
-                fontSize = 12.sp,
-                fontWeight = FontWeight.SemiBold
-            )
+            Box(
+                contentAlignment= Alignment.Center
+            ) {
+                // Examination Title
+                Text(
+                    text = "1st Semester Examination",
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.SemiBold
+                )
+            }
         }
 
         // Result Table
@@ -114,7 +133,11 @@ fun background(results: List<Getdata>, navController: NavController) {
         }
     }
 }
-
+@Preview
+@Composable
+fun Pre(){
+    background(emptyList(), rememberNavController())
+}
 
 
 /**
@@ -219,26 +242,28 @@ fun ResultTable(results: List<Getdata>) {
     }
 }
 
-/**
- * Composable function to display personal information of a student.
- *
- * @param name Student's name.
- * @param regName Student's registration name.
- * @param session Session information.
- */
-@Composable
-fun GetPersonInfo(name: String, regName: String, session: String) {
-    Text(
-        text = "Name of Student :$name",
-        fontSize = 10.5.sp
-    )
-    Text(
-        text = "Registration No :$regName",
-        fontSize = 10.5.sp
-    )
-    Text(
-        text = "Session :$session",
-        fontSize = 10.5.sp
-    )
-}
+    /**
+     * Composable function to display personal information of a student.
+     *
+     * @param name Student's name.
+     * @param regName Student's registration name.
+     * @param session Session information.
+     */
+    @Composable
+    fun GetPersonInfo(name: String, regName: String, session: String, modifier: Modifier) {
+
+        Text(
+            text = "Name of Student :$name",
+            fontSize = 10.5.sp,
+        )
+        Text(
+            text = "Registration No :$regName",
+            fontSize = 10.5.sp
+        )
+        Text(
+            text = "Session :$session",
+            fontSize = 10.5.sp
+        )
+    }
+
 

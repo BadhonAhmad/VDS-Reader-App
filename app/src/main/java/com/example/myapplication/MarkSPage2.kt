@@ -7,7 +7,6 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Surface
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -21,7 +20,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class MarkSPage2 : ComponentActivity() {
-    private val BASE_URL = "http://10.200.192.79:5001/"
+    private val BASE_URL = "http://192.168.29.116:5001/"
     private var markSPage2Launched = false
     private val apiService: ApiService by lazy {
         Retrofit.Builder()

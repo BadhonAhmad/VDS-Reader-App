@@ -21,7 +21,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class MarkSPage1 : ComponentActivity() {
-    private val BASE_URL = "http://10.200.192.79:5001/"
+    private val BASE_URL = "http://192.168.29.116:5001/"
     private var markSPage2Launched = false
     private val apiService: ApiService by lazy {
         Retrofit.Builder()
