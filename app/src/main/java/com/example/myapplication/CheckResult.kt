@@ -14,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class CheckResult : AppCompatActivity() {
     // Base URL for the API
-    private val baseUrl = "http://10.200.194.29:5001/"
+    private val baseUrl = "http://10.200.192.79:5001/"
 
     // Views
     private lateinit var regNoEditText: EditText

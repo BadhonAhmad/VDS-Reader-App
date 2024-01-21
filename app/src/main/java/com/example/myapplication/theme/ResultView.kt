@@ -6,7 +6,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Button
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -30,68 +29,92 @@ import com.example.myapplication.R
  * @param results List of examination results to be displayed.
  */
 @Composable
+
 fun background(results: List<Getdata>, navController: NavController) {
-    Column(
+    LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .fillMaxWidth(),
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Header Image
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .padding(6.dp),
-            contentAlignment = Alignment.TopCenter
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.sustlogo),
-                contentDescription = null,
+        item {
+            // Header Image
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(100.dp)
-                    .clip(MaterialTheme.shapes.medium)
+                    .wrapContentHeight()
+                    .padding(6.dp),
+                contentAlignment = Alignment.TopCenter
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.sustlogo),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(100.dp)
+                        .clip(MaterialTheme.shapes.medium)
+                )
+            }
+        }
+
+        item {
+            // University Title
+            Text(
+                text = "SHAHJALAL UNIVERSITY OF SCIENCE & TECHNOLOGY, SYLHET, BANGLADESH",
+                color = Color(0xFFFF013220),
+                fontSize = 11.5.sp,
+                textAlign = TextAlign.Center
             )
         }
-        // University Title
-        Text(
-            text = "SHAHJALAL UNIVERSITY OF SCIENCE & TECHNOLOGY, SYLHET, BANGLADESH",
-            color = Color(0xFFFF013220),
-            fontSize = 11.5.sp,
-            textAlign = TextAlign.Center
-        )
 
-        // Student Information
-        GetPersonInfo("PUT NAME", "Registration Name", "Session")
+        item {
+            // Student Information
+            GetPersonInfo("PUT NAME", "Registration Name", "Session")
+        }
 
-        Spacer(modifier = Modifier.padding(top = 15.dp))
-        // Examination Title
-        Text(
-            text = "1st Semester Examination",
-            fontSize = 12.sp,
-            fontWeight = FontWeight.SemiBold
-        )
+        item {
+            Spacer(modifier = Modifier.padding(top = 15.dp))
+            // Examination Title
+            Text(
+                text = "1st Semester Examination",
+                fontSize = 12.sp,
+                fontWeight = FontWeight.SemiBold
+            )
+        }
+
         // Result Table
-        ResultTable(results)
+        item {
+            TableHeader()
+        }
+        items(results) { result ->
+            ResultItem(result = result)
+        }
 
-        ElevatedButton(
-            onClick = {
-                // Navigate to the next page if the destination exists
-                navController.navigate("nextpage") {
-                    popUpTo("Start") { inclusive = true }
-                }
-            },
-            modifier = Modifier
-                .padding(top = 16.dp)
-                .fillMaxWidth()
-                .height(48.dp)  // Adjusted button height
-        ) {
-            Text("NEXT")
+        items(results) { result ->
+            ResultItem(result = result)
+        }
+
+        items(results) { result ->
+            ResultItem(result = result)
+        }
+
+        item {
+            ElevatedButton(
+                onClick = {
+                    // Navigate to the next page if the destination exists
+                    navController.navigate("nextpage") {
+                        popUpTo("Start") { inclusive = true }
+                    }
+                },
+                modifier = Modifier
+                    .padding(top = 16.dp)
+                    .fillMaxWidth()
+                    .height(48.dp)  // Adjusted button height
+            ) {
+                Text("NEXT")
+            }
         }
     }
 }
+
 
 
 /**
@@ -104,7 +127,6 @@ fun ResultItem(result: Getdata) {
     TableRow(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(0.dp)
     ) {
         TableCell(text = result.course_code, weight = 0.21f, alignment = TextAlign.Left, title = false)
         TableCell(text = result.course_title, weight = 0.265f, alignment = TextAlign.Left, title = false)
@@ -220,14 +242,3 @@ fun GetPersonInfo(name: String, regName: String, session: String) {
     )
 }
 
-/**
- * Composable function to create an elevated button with custom onClick behavior.
- *
- * @param onClick Action to be performed on button click.
- */
-@Composable
-fun ElevatedButton1(onClick: () -> Unit) {
-    ElevatedButton(onClick = { onClick() }) {
-        // Button content goes here
-    }
-}
