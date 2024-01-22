@@ -20,7 +20,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class MarkSPage2 : ComponentActivity() {
-    private val BASE_URL = "http://192.168.29.116:5001/"
+    private val BASE_URL = "http://10.200.192.126:5001/"
     private var markSPage2Launched = false
     private val apiService: ApiService by lazy {
         Retrofit.Builder()
@@ -33,7 +33,7 @@ class MarkSPage2 : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Make the API call
-        val call: Call<List<Getdata>> = apiService.getResults()
+        val call: Call<List<Getdata>> = apiService.getResults2()
 
         call.enqueue(object : Callback<List<Getdata>> {
             override fun onResponse(call: Call<List<Getdata>>, response: Response<List<Getdata>>) {

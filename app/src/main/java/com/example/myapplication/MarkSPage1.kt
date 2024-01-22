@@ -7,7 +7,6 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Surface
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -21,8 +20,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class MarkSPage1 : ComponentActivity() {
-    private val BASE_URL = "http://192.168.29.116:5001/"
+    private val BASE_URL = "http://10.200.192.126:5001/"
     private var markSPage2Launched = false
+    private val regNo= CheckResult.DataManager.studentInfo?.reg_no.toString()
     private val apiService: ApiService by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -34,7 +34,8 @@ class MarkSPage1 : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Make the API call
-        val call: Call<List<Getdata>> = apiService.getResults()
+      // val regNo= CheckResult.DataManager.studentInfo?.reg_no.toString()
+        val call: Call<List<Getdata>> = apiService.getResults1(2020331092)
 
         call.enqueue(object : Callback<List<Getdata>> {
             override fun onResponse(call: Call<List<Getdata>>, response: Response<List<Getdata>>) {
