@@ -19,7 +19,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class MarkSPage1 : ComponentActivity() {
+class MarkSPage5 : ComponentActivity() {
     private val BASE_URL = "http://192.168.29.116:5001/"
     private var markSPage2Launched = false
     private val apiService: ApiService by lazy {
@@ -34,7 +34,7 @@ class MarkSPage1 : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Make the API call
-        val call: Call<List<Getdata>> = apiService.getResults("1st",regNo.toInt(),)
+        val call: Call<List<Getdata>> = apiService.getResults("5th",regNo.toInt())
 
         call.enqueue(object : Callback<List<Getdata>> {
             override fun onResponse(call: Call<List<Getdata>>, response: Response<List<Getdata>>) {
@@ -53,15 +53,15 @@ class MarkSPage1 : ComponentActivity() {
                                         ) {
                                             composable("Start") {
 
-                                                background(resultList, navController,"1st")
+                                                background(resultList, navController,"5th")
                                             }
 
                                             composable("nextpage") {
                                                 // Check if MarkSPage2 has already been launched
                                                 if (!markSPage2Launched) {
                                                     // Launch MarkSPage2
-                                                    val intent = Intent(this@MarkSPage1, MarkSPage2::class.java)
-                                                    startActivity(intent)
+                                                   val intent = Intent(this@MarkSPage5, MarkSPage6::class.java)
+                                                   startActivity(intent)
 
                                                     // Set the flag to true to indicate that MarkSPage2 has been launched
                                                     markSPage2Launched = true
@@ -96,7 +96,7 @@ class MarkSPage1 : ComponentActivity() {
     }
 
     private fun showToast(message: String) {
-        showToast(this@MarkSPage1, message)
+        showToast(this@MarkSPage5, message)
     }
 
     private fun showToast(context: Context, message: String) {

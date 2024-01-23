@@ -33,7 +33,7 @@ import com.example.myapplication.R
  */
 @Composable
 
-fun background(results: List<Getdata>, navController: NavController) {
+fun background(results: List<Getdata>, navController: NavController,semester:String) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -92,10 +92,11 @@ fun background(results: List<Getdata>, navController: NavController) {
             ) {
                 // Examination Title
                 Text(
-                    text = "1st Semester Examination",
+                    text = "${semester} Semester Examination",
                     fontSize = 12.sp,
                     fontWeight = FontWeight.SemiBold
                 )
+
             }
         }
 
@@ -107,13 +108,6 @@ fun background(results: List<Getdata>, navController: NavController) {
             ResultItem(result = result)
         }
 
-        items(results) { result ->
-            ResultItem(result = result)
-        }
-
-        items(results) { result ->
-            ResultItem(result = result)
-        }
 
         item {
             ElevatedButton(
@@ -136,7 +130,7 @@ fun background(results: List<Getdata>, navController: NavController) {
 @Preview
 @Composable
 fun Pre(){
-    background(emptyList(), rememberNavController())
+    background(emptyList(), rememberNavController(),"1st")
 }
 
 
@@ -264,6 +258,7 @@ fun ResultTable(results: List<Getdata>) {
             text = "Session :$session",
             fontSize = 10.5.sp
         )
+
     }
 
 

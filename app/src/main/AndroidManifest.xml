@@ -50,6 +50,30 @@
             android:name=".MarkSPage2"
             android:exported="false"
             android:screenOrientation="fullSensor" />
+        <activity
+            android:name=".MarkSPage3"
+            android:exported="false"
+            android:screenOrientation="fullSensor" />
+        <activity
+            android:name=".MarkSPage4"
+            android:exported="false"
+            android:screenOrientation="fullSensor" />
+        <activity
+            android:name=".MarkSPage5"
+            android:exported="false"
+            android:screenOrientation="fullSensor" />
+        <activity
+            android:name=".MarkSPage6"
+            android:exported="false"
+            android:screenOrientation="fullSensor" />
+        <activity
+            android:name=".MarkSPage7"
+            android:exported="false"
+            android:screenOrientation="fullSensor" />
+        <activity
+            android:name=".MarkSPage8"
+            android:exported="false"
+            android:screenOrientation="fullSensor" />
     </application>
 
 </manifest>
