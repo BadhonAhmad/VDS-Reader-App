@@ -33,13 +33,9 @@ import com.example.myapplication.R
  */
 @Composable
 
-fun background(results: List<Getdata>, navController: NavController,semester:String) {
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
+fun background(results: List<Getdata>,semester:String) {
 
-    ) {
-        item {
+
             // Header Image
             Box(
                 modifier = Modifier
@@ -56,18 +52,15 @@ fun background(results: List<Getdata>, navController: NavController,semester:Str
                         .clip(MaterialTheme.shapes.medium)
                 )
             }
-        }
-
-        item{
             // University Title
             Text(
                 text = "SHAHJALAL UNIVERSITY OF SCIENCE & TECHNOLOGY, SYLHET, BANGLADESH",
                 fontSize = 11.5.sp,
                 textAlign = TextAlign.Center
             )
-        }
 
-        item{
+
+
             // Student Information
 
                // contentAlignment= Alignment.Center
@@ -83,9 +76,9 @@ fun background(results: List<Getdata>, navController: NavController,semester:Str
             )
 
 
-        }
 
-        item {
+
+
             Spacer(modifier = Modifier.padding(top = 15.dp))
             Box(
                 contentAlignment= Alignment.Center
@@ -98,39 +91,22 @@ fun background(results: List<Getdata>, navController: NavController,semester:Str
                 )
 
             }
-        }
+
 
         // Result Table
-        item {
-            TableHeader()
-        }
-        items(results) { result ->
-            ResultItem(result = result)
-        }
 
 
-        item {
-            ElevatedButton(
-                onClick = {
-                    // Navigate to the next page if the destination exists
-                    navController.navigate("nextpage") {
-                        popUpTo("Start") { inclusive = true }
-                    }
-                },
-                modifier = Modifier
-                    .padding(top = 16.dp)
-                    .fillMaxWidth()
-                    .height(48.dp)  // Adjusted button height
-            ) {
-                Text("NEXT")
-            }
-        }
-    }
+      ResultTable(results)
+    ResultTable(results)
+    ResultTable(results)
+
+
+
 }
 @Preview
 @Composable
 fun Pre(){
-    background(emptyList(), rememberNavController(),"1st")
+    background(emptyList(),"1st")
 }
 
 
@@ -226,11 +202,12 @@ fun TableHeader() {
  */
 @Composable
 fun ResultTable(results: List<Getdata>) {
-    LazyColumn {
-        item {
-            TableHeader()
-        }
-        items(results) { result ->
+    Column {
+        // TableHeader
+        TableHeader()
+
+        // Table content
+        results.forEach { result ->
             ResultItem(result = result)
         }
     }
@@ -261,4 +238,41 @@ fun ResultTable(results: List<Getdata>) {
 
     }
 
-
+@Composable
+fun NavigationButtons(navController: NavController,s:String) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 16.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        ElevatedButton(
+            onClick = {
+                // Navigate to the next page if the destination exists
+                navController.navigate("nextpage")
+            },
+            modifier = Modifier
+                .weight(1f)
+                .height(48.dp)
+        ) {
+            Text("NEXT")
+        }
+        if (s != "1st") {
+            // Assuming you want to navigate to the "previous" destination with a pop-up to "Start"
+            ElevatedButton(
+                onClick = {
+                    // Navigate to the previous page if the destination exists
+                    navController.navigate("Start") {
+                        popUpTo("nextpage") { inclusive = true }
+                    }
+                },
+                modifier = Modifier
+                    .weight(1f)
+                    .height(48.dp)
+                    .padding(start = 16.dp)
+            ) {
+                Text("Previous")
+            }
+        }
+    }
+}

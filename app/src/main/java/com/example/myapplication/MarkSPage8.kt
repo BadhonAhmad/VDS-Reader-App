@@ -7,7 +7,15 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -46,29 +54,18 @@ class MarkSPage8 : ComponentActivity() {
                             setContent {
                                 MyApplicationTheme {
                                     Surface {
-                                        val navController = rememberNavController()
-                                        NavHost(
-                                            navController = navController,
-                                            startDestination = "Start"
+                                        LazyColumn(
+                                            modifier = Modifier
+                                                .fillMaxSize()
                                         ) {
-                                            composable("Start") {
+                                            item {
+                                                background(resultList, "8th")
 
-                                                background(resultList, navController,"8th")
                                             }
 
-                                            composable("nextpage") {
-                                                // Check if MarkSPage2 has already been launched
-                                                if (!markSPage2Launched) {
-                                                    // Launch MarkSPage2
-                                                    //val intent = Intent(this@MarkSPage7, MarkSPage8::class.java)
-                                                  //  startActivity(intent)
-
-                                                    // Set the flag to true to indicate that MarkSPage2 has been launched
-                                                    markSPage2Launched = true
-                                                }
-                                            }
                                         }
                                     }
+
                                 }
                             }
                         }
