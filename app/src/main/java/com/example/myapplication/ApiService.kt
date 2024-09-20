@@ -6,6 +6,11 @@ import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
+fun printHelloWorld() {
+    println("Hello, World!")
+}
+
+
 /**
  * Retrofit API service interface for making network requests.
  */
